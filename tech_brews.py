@@ -74,7 +74,7 @@ If none needed, return: []"""
                     "X-Title": "TechBrews Assistant"
                 },
                 json={
-                    "model": "google/gemini-flash-1.5",
+                    "model": "google/gemini-2.5-flash-lite",
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.3
                 },
@@ -134,7 +134,7 @@ Provide a clear, concise answer with relevant details."""
                     "X-Title": "TechBrews Assistant"
                 },
                 json={
-                    "model": "google/gemini-flash-1.5",
+                    "model": "google/gemini-2.5-flash-lite",
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.7,
                     "max_tokens": 1000
