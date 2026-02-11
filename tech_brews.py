@@ -70,9 +70,11 @@ If none needed, return: []"""
                 headers={
                     "Authorization": f"Bearer {self.openrouter_key}",
                     "Content-Type": "application/json",
+                    "HTTP-Referer": "https://github.com/techbrews",
+                    "X-Title": "TechBrews Assistant"
                 },
                 json={
-                    "model": "google/gemini-2.0-flash-exp:free",
+                    "model": "google/gemini-flash-1.5",
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.3
                 },
@@ -128,9 +130,11 @@ Provide a clear, concise answer with relevant details."""
                 headers={
                     "Authorization": f"Bearer {self.openrouter_key}",
                     "Content-Type": "application/json",
+                    "HTTP-Referer": "https://github.com/techbrews",
+                    "X-Title": "TechBrews Assistant"
                 },
                 json={
-                    "model": "google/gemini-2.0-flash-exp:free",
+                    "model": "google/gemini-flash-1.5",
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.7,
                     "max_tokens": 1000
@@ -140,7 +144,15 @@ Provide a clear, concise answer with relevant details."""
             
             if response.status_code == 200:
                 return response.json()['choices'][0]['message']['content']
-            return f"Error: {response.status_code}"
+            
+            error_msg = f"API Error {response.status_code}"
+            try:
+                error_detail = response.json()
+                if 'error' in error_detail:
+                    error_msg += f": {error_detail['error'].get('message', '')}"
+            except:
+                pass
+            return error_msg
                 
         except Exception as e:
             return f"Error: {str(e)}"
